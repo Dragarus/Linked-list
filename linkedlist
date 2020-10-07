@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct node{
+	int value;
+	struct node *next;
+}node;
+int q=1;
+
+node *last=NULL,*first=NULL,*temp,*prev1,*prev2,*temp1,*temp2,*newnode,*ptr1,*ptr2;
+
+node *create_node(int val){
+	newnode=(struct node*)malloc(sizeof(struct node));
+	newnode->value=val;
+	newnode->next=NULL;
+	return newnode;
+}
+
+//==================================================================================================
+
+void display(){
+	temp=first;
+	printf("===========\n");
+	while(temp!=NULL){
+		printf(" %d->",temp->value);
+		temp=temp->next;
+	}
+	printf("\n===========\n");
+}
+
+//=================================================================================================
+void insert(){
+	int val;
+	printf("\nEnter the value\n");
+	scanf("%d",&val);
+	newnode=create_node(val);
+	if(first==last&&first==NULL){
+		first=last=newnode;
+	}
+	else{
+		temp=first;
+		first=newnode;
+		first->next=temp;
+	}
+	display();
+}
+
+//==================================================================================================
+
+void swap(int a,int b){
+	int k=1;
+	ptr1=first;
+	ptr2=first;
+	while(k<a-1){
+		prev1=ptr1;
+		ptr1=ptr1->next;
+		k++;
+	}
+	k=1;
+	while(k<b-1){
+		prev2=ptr2;
+		ptr2=ptr2->next;
+		k++;
+	}
+	if(a>1){
+	temp=ptr1->next;
+	ptr1->next=ptr2->next;
+	ptr2->next=temp;
+	temp=ptr1->next->next;
+	ptr1->next->next=ptr2->next->next;
+	ptr2->next->next=temp;
+	}
+	else
+	{
+		temp1=first;
+		temp2=ptr2->next->next;
+		first=ptr2->next;
+		first->next=temp1->next;
+		ptr2->next=temp1;
+		temp1->next=temp2;
+		
+		
+	}
+
+display(); 
+}
+//==================================================================================================
+int length(){
+	int z=0;
+	temp=first;
+	while(temp!=NULL){
+		temp=temp->next;
+		z++;
+	}
+	return z;
+}
+//==================================================================================================
+
+void deletenf(){
+	first=first->next;
+	display();
+}
+
+//=================================================================================================
+
+void reverse(){
+	int i=1,j;
+	j=length();
+	while(i<j){
+		swap(i,j);
+		i++;
+		j--;
+	}
+	display();
+}
+//=================================================================================================
+
+int main(){
+int a,b,c,z;
+while(q==1){
+	printf("\nChoose an operation\n1.Insert \n2.swap \n3.Length \n4.reverse \n5.Display\n6.Quit\n\n-->");
+	scanf("%d",&c);
+	switch(c){
+		case 1: insert();
+		break;
+		case 2: scanf("%d %d",&a,&b);swap(a,b);
+		break;
+		case 3: printf(" length is : %d",length()); 											
+		break;
+		case 4: reverse();
+		break;
+		case 5: display();
+		break;
+		case 6: printf("quiting\n");
+				q=0;
+		break;
+		default: ("invalid choice");
+	}
+	
+	
+}
+
+}
